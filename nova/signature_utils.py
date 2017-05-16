@@ -244,7 +244,6 @@ def get_public_key(context, signature_certificate_uuid, signature_key_type):
     """
     certificate = get_certificate(context, signature_certificate_uuid)
 
-    # Note that this public key could either be
     # RSAPublicKey, DSAPublicKey, or EllipticCurvePublicKey
     public_key = certificate.public_key()
 
@@ -273,9 +272,6 @@ def get_certificate(context, signature_certificate_uuid):
         # The certificate retrieved here is a castellan certificate object
         cert = keymgr_api.get(context, signature_certificate_uuid)
     except KeyManagerError as e:
-        # The problem encountered may be backend-specific, since castellan
-        # can use different backends.  Rather than importing all possible
-        # backends here, the generic "Exception" is used.
         msg = (_LE("Unable to retrieve certificate with ID %(id)s: %(e)s")
                % {'id': signature_certificate_uuid,
                   'e': encodeutils.exception_to_unicode(e)})
